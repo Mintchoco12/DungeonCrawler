@@ -467,9 +467,9 @@ TextureImporter:
     filterMode: 0
     aniso: -1
     mipBias: -100
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -1889,7 +1889,7 @@ TextureImporter:
       name: overworld_tiles_61
       rect:
         serializedVersion: 2
-        x: 121
+        x: 119
         y: 68
         width: 16
         height: 16
