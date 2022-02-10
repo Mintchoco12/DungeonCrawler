@@ -24,13 +24,14 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator animator;
 
-    void Start()
+    private void Start()
     {
         animator.GetComponent<Animator>();
     }
 
-    void Update()
-    {
+    private void Update()
+    {   
+        //Changes the animation
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             lookDirection = LookDirection.down;

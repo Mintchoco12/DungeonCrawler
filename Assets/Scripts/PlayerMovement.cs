@@ -18,10 +18,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
-        //static float GetAxisRaw(string Horizontal);
+        //Detects input for player movement
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.y = Input.GetAxisRaw("Vertical");
 
+        //Disables diagonal movement
         if (direction.y != 0)
         {
             direction.x = 0;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void FixedUpdate()
     {
+        //Moves the player
        rigidbody.velocity = direction * moveSpeed;
     }
 }

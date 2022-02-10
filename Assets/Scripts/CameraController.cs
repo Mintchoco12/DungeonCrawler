@@ -13,8 +13,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector2 viewportSize;
 
-    void Update()
+    private void Update()
     {
+        //Changes the camera
         if (gameObject.GetComponent<Camera>().WorldToViewportPoint(player.transform.position).y >= 0.75f)
         {
             if (currrentCoroutine == null)
@@ -39,13 +40,12 @@ public class CameraController : MonoBehaviour
 
     IEnumerator MoveCam(Vector3 direction)
     {
-        // geen playermovement
-        // player.GetComponent<PlayerMovenemt>().enabled = false;
+        //Disable playermovement
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;        
-        // wacht 0.2 seconden
+        //Wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
 
-        // beweeg over 1 seconde
+        //Move over 1 second
         float elapsedTime = 0;
         float overTime = 1;
         Vector3 end = transform.position + new Vector3(direction.x * viewportSize.x, direction.y * viewportSize.y, 0);
@@ -57,10 +57,10 @@ public class CameraController : MonoBehaviour
         }
         transform.position = end;
 
-        // wacht 0.2 seconden
+        //Wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
 
-        // playermovement aan
+        //Enable playermovement
         player.GetComponent<PlayerMovement>().enabled = true;
 
         currrentCoroutine = null;
