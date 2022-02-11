@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
         //Wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
 
-        //Move over 1 second
+        //Move after 1 second
         float elapsedTime = 0;
         float overTime = 1;
         Vector3 end = transform.position + new Vector3(direction.x * viewportSize.x, direction.y * viewportSize.y, 0);

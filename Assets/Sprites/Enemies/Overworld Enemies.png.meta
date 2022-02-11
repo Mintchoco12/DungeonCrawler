@@ -52,7 +52,7 @@ TextureImporter:
     second: Overworld Enemies_15
   - first:
       213: -5840466563482875041
-    second: Overworld Enemies_16
+    second: Rock
   - first:
       213: 7839268753429416710
     second: Overworld Enemies_17
@@ -1006,7 +1006,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Overworld Enemies_16
+      name: Rock
       rect:
         serializedVersion: 2
         x: 392

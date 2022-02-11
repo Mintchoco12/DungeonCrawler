@@ -4,19 +4,22 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected float timePerTile = 1f;
     protected new Rigidbody2D rigidbody2D;
+    private Animator animator;
+    private Camera renderCam;
+
     private EnemyState state;
+    protected LookDirection direction;
 
     private Vector2 startPosition;
     private Vector2 targetPosition;
     private float distanceToLerp;
     private float lerpTimer;
-
-    private Camera renderCam;
-
+    
     protected virtual void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         renderCam = GameObject.Find("RenderCam").GetComponent<Camera>();
+        animator = GetComponent<Animator>();
     }
 
     protected void SetDestination(Vector2 destination)
@@ -63,12 +66,19 @@ public class Enemy : MonoBehaviour
 
     protected virtual void ReachedDestination()
     {
-        Debug.Log("wee");
         state = EnemyState.idle;
+    }
+
+    protected virtual void Attack()
+    {
+        Debug.Log("Attacking");
+        state = EnemyState.attacking;
     }
 
     private void FixedUpdate()
     {
+        UpdateAnimator();
+
         if (state == EnemyState.roaming)
         {
             MoveToDestination();
@@ -104,5 +114,17 @@ public class Enemy : MonoBehaviour
         return viewportPoint.x > 0f && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 0.7f;
     }
 
+    private void UpdateAnimator()
+    {
+        if (animator != null)
+        {
+            animator.SetInteger("EnemyState", (int)state);
+            animator.SetFloat("LookDirection", (float)direction);
+        }
+        else
+        {
+            Debug.Log("No animator found on " + name);
+        }
+    }
         
 }

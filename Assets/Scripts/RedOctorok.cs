@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class RedOctorok : Enemy
 {
-    [SerializeField] private int maxDistance = 4;
+    [SerializeField] private int maxDistance;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float chanceToShoot;
     [SerializeField] private LayerMask layerMask;
 
     protected override void Start()
     {
         base.Start();
         SetNextDestination();
-        //SetDestination(rigidbody2D.position + UnityEngine.Vector2.right * 2);
     }
 
     private void SetNextDestination()
     {
-        LookDirection randomDirection = (LookDirection)Random.Range(0, 4);
-
-        Vector2 directionVector = DirectionToVector2 (randomDirection);
-
+        //Generates a random direction (up, down, left, right)
+        direction = (LookDirection)Random.Range(0, 4);
+        //Converts it to a vector2
+        Vector2 directionVector = DirectionToVector2 (direction);
+        //Generates random distance (amount of tiles) to walk
         int randomDistance = Random.Range(1, maxDistance + 1);
-
+        //Calculates the destination vector
         Vector2 destination = rigidbody2D.position + directionVector * randomDistance;
 
         RaycastHit2D hit = Physics2D.Raycast(rigidbody2D.position, directionVector, randomDistance, layerMask);
@@ -45,8 +47,7 @@ public class RedOctorok : Enemy
         { 
             destination = rigidbody2D.position;
         }
-        Debug.Log(destination);
-
+ 
         SetDestination(destination); 
     }
 
@@ -56,4 +57,13 @@ public class RedOctorok : Enemy
         Invoke("SetNextDestination", timePerTile);
     }
 
+    protected override void Attack()
+    {
+        base.Attack();
+
+        if (true)
+        {
+
+        }
+    }
 }
