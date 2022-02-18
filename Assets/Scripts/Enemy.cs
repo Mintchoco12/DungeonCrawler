@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     protected new Rigidbody2D rigidbody2D;
     private Animator animator;
     private Camera renderCam;
+    protected Transform player;
 
     private EnemyState state;
     protected LookDirection direction;
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        player = FindObjectOfType<PlayerMovement>().transform;
         renderCam = GameObject.Find("RenderCam").GetComponent<Camera>();
         animator = GetComponent<Animator>();
     }
@@ -91,17 +93,17 @@ public class Enemy : MonoBehaviour
 
         switch(direction)
         {
+            case LookDirection.up:
+                directionVector = Vector2.up;
+                break;
+            case LookDirection.right:
+                directionVector = Vector2.right;
+                break;
             case LookDirection.down:
                 directionVector = Vector2.down;
                 break;
             case LookDirection.left:
                 directionVector = Vector2.left;
-                break;
-            case LookDirection.right:
-                directionVector = Vector2.right;
-                break;
-            case LookDirection.up:
-                directionVector = Vector2.up;
                 break;
         }
 
@@ -126,5 +128,47 @@ public class Enemy : MonoBehaviour
             Debug.Log("No animator found on " + name);
         }
     }
+
+    protected float CalculateAngle(Vector3 from, Vector3 to)
+    {
+        //Calculates the angle degree between two vectors
+        return Quaternion.FromToRotation(Vector3.up, to - from).eulerAngles.z;
+    }
         
+    protected LookDirection CalculateDirection(Vector2 pos1, Vector2 pos2, int amountDirections = 4)
+    {
+        float angle = 360f - CalculateAngle(pos1, pos2);
+
+        float part = 360f / amountDirections;
+
+        if (angle.Equals(360))
+        {
+            angle = 0;
+        }
+
+        int result = Mathf.RoundToInt(angle / part);
+
+        if (result == amountDirections)
+        {
+            result = 0;
+        }
+
+        LookDirection direction = LookDirection.up;
+
+        switch(result)
+        {
+            case 1:
+                direction = LookDirection.right;
+                break;
+            case 2:
+                direction = LookDirection.left;
+                break;
+            case 3:
+                direction = LookDirection.down;
+                break;
+
+        }
+
+        return direction;
+    }
 }

@@ -9,6 +9,8 @@ public class RedOctorok : Enemy
     [SerializeField] private float chanceToShoot;
     [SerializeField] private LayerMask layerMask;
 
+    
+
     protected override void Start()
     {
         base.Start();
@@ -54,16 +56,46 @@ public class RedOctorok : Enemy
     protected override void ReachedDestination()
     {
         base.ReachedDestination();
-        Invoke("SetNextDestination", timePerTile);
+
+        if (Random.value < chanceToShoot)
+        {
+            Attack();
+        }
+        else
+        {
+            Invoke("SetNextDestination", timePerTile);
+        }
     }
 
     protected override void Attack()
     {
         base.Attack();
 
-        if (true)
-        {
+        direction = CalculateDirection(rigidbody2D.position, player.position);
 
+        Invoke("ShootProjectile", Time.deltaTime * 15);
+
+        Invoke("SetNextDestination", Time.deltaTime * 40);
+    }
+
+    public void ShootProjectile()
+    {
+        if (projectile == null)
+        {
+            Debug.Log("No projectile set on " + name);
+            return;
         }
+
+        GameObject proj = Instantiate(projectile, transform.position, Quaternion.identity);
+
+        Projectile p = proj.GetComponent<Projectile>();
+
+        if (p == null)
+        {
+            Debug.Log("Projectile not found on instance " + name);
+            return;
+        }
+
+        p.Launch(gameObject, direction);
     }
 }
