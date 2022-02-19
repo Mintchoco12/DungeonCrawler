@@ -51,4 +51,14 @@ public class PlayerHealth : Health
             ChangeHealth(-0.5f);
         }
     }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
 }
