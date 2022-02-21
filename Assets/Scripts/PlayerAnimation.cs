@@ -43,6 +43,10 @@ public class PlayerAnimation : MonoBehaviour
             {
                 playerState = PlayerState.idle;
             }
+            else if (playerState == PlayerState.attacking && xAxis > 0 & yAxis >= 0)
+            {
+                playerState = PlayerState.walking;
+            }
             else
             {
                 playerState = PlayerState.walking;
@@ -80,7 +84,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             playerState = PlayerState.attacking;
             animator.SetInteger("PlayerState", (int)playerState);
-
         }
     }
 

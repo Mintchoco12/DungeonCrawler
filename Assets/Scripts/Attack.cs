@@ -13,6 +13,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private Vector3 boxSize1;
 
     private LookDirection lookDirecton;
+    private PlayerState playerState;
     private PlayerAnimation playerAnim;
 
     private void Start()
@@ -30,6 +31,7 @@ public class Attack : MonoBehaviour
         if (Input.GetButtonDown("Fire2"))
         {
             lookDirecton = playerAnim.GetDirection();
+
             if (lookDirecton == LookDirection.up)
             {
                 TurnSwordOff();
