@@ -24,10 +24,6 @@ public class PlayerHealth : Health
             currentHealth = 0;
             Kill();
         }
-        else
-        {
-            playerAnimation.SetAnimPlayerState(PlayerState.idle);
-        }
 
         if (currentHealth > maxHealth)
         {
@@ -38,16 +34,14 @@ public class PlayerHealth : Health
     public override void Kill()
     {
         base.Kill();
-        playerAnimation.SetAnimPlayerState(PlayerState.dead);
+        playerAnimation.TriggerDeathAnimation();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            print("collision");
-
-            playerAnimation.SetAnimPlayerState(PlayerState.hit);
+            playerAnimation.Hit();
             ChangeHealth(-0.5f);
         }
     }

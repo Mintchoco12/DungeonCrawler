@@ -2,126 +2,106 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LookDirection
-{
-    down = 0,
-    left,
-    right,
-    up
-}
-
-public enum PlayerState
-{
-    idle = 0,
-    walking,
-    attacking,
-    hit,
-    dead
-}
-
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private LookDirection lookDirection;
     [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator animator;
 
+    [Header("Input")]
     [SerializeField] private float xAxis;
     [SerializeField] private float yAxis;
     [SerializeField] private bool fire1;
     [SerializeField] private bool fire2;
+    [SerializeField] private Color[] flashColors;
+
+    private SpriteRenderer playerRenderer;
+
 
     private void Start()
     {
         animator.GetComponent<Animator>();
+        playerState = PlayerState.idle;
+        lookDirection = LookDirection.down;
+        playerRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {   
-        ////Changes the animation
-        //if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        //{
-        //    lookDirection = LookDirection.down;
-        //    playerState = PlayerState.walking;
-        //}
-        //else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        //{
-        //    lookDirection = LookDirection.left;
-        //    playerState = PlayerState.walking;
-        //}
-        //else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        //{
-        //    lookDirection = LookDirection.right;
-        //    playerState = PlayerState.walking;
-        //}
-        //else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        //{
-        //    lookDirection = LookDirection.up;
-        //    playerState = PlayerState.walking;
-        //}
-        //else
-        //{
-        //    playerState = PlayerState.idle;
-        //}
-
-        //animator.SetFloat("LookDirection", (float)lookDirection);
-        //animator.SetInteger("PlayerState", (int)playerState);
-
         CheckMovement();
+        UseItemSlot();
     }
 
     private void CheckMovement()
     {
-        xAxis = Input.GetAxis("Horizontal");
-        yAxis = Input.GetAxis("Vertical");
-
-        fire1 = Input.GetButtonDown("Fire1"); //z
-        fire2 = Input.GetButtonDown("Fire2"); //x
-
-        if (xAxis == 0 & yAxis == 0)
+        if (playerState != PlayerState.dead)
         {
-            playerState = PlayerState.idle;
-        }
-        else
-        {
-            playerState = PlayerState.walking;
+            xAxis = Input.GetAxis("Horizontal");
+            yAxis = Input.GetAxis("Vertical");
+
+            if (xAxis == 0 & yAxis == 0)
+            {
+                playerState = PlayerState.idle;
+            }
+            else
+            {
+                playerState = PlayerState.walking;
+            }
+            animator.SetInteger("PlayerState", (int)playerState);
         }
 
         if (yAxis > 0)
         {
-            xAxis = 0;
             lookDirection = LookDirection.up;
         }
         else if (yAxis < 0)
         {
-            xAxis = 0;
             lookDirection = LookDirection.down;
         }
         else if (xAxis > 0)
         {
-            yAxis = 0;
             lookDirection = LookDirection.right;
         }
         else if (xAxis < 0)
         {
-            yAxis = 0;
             lookDirection = LookDirection.left;
         }
-
-        if (fire1)
-        {
-            print("z pressed");
-        }
-        if (fire2)
-        {
-            playerState = PlayerState.attacking;
-        }
-
-        animator.SetInteger("PlayerState", (int)playerState);
         animator.SetFloat("LookDirection", (float)lookDirection);
     }
 
-    public void SetAnimPlayerState(PlayerState stateInt)
+    private void UseItemSlot()
     {
+        if (Input.GetButtonDown("Fire1"))
+        {
+
+        }
+        //B button mapped to RMB
+        if (Input.GetButtonDown("Fire2"))
+        {
+            playerState = PlayerState.attacking;
+            animator.SetInteger("PlayerState", (int)playerState);
+
+        }
+    }
+
+    public void Hit()
+    {
+        StartCoroutine(FlashSprite(0.1f));
+    }
+
+    IEnumerator FlashSprite(float flashTime)
+    {
+        for (int i = 0; i < flashColors.Length; i++)
+        {
+            playerRenderer.material.color = flashColors[i];
+            yield return new WaitForSeconds(flashTime);
+        }
+    }
+
+    public void TriggerDeathAnimation()
+    {
+        playerState = PlayerState.dead;
+        animator.SetTrigger("Death");
         animator.SetInteger("PlayerState", (int)playerState);
     }
 

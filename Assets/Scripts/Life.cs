@@ -41,7 +41,6 @@ public class Life : MonoBehaviour
         {
             if (i + 0.5f == playerHealth.GetCurrentHealth())
             {
-                print("half");
                 heartImages[i].sprite = halfHeart;
             }
             else if (i < playerHealth.GetCurrentHealth())
