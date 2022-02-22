@@ -17,6 +17,7 @@ public class PlayerHealth : Health
         base.ChangeHealth(amount);
     }
 
+    //Checks hp of player
     protected override void CheckHealth()
     {
         if (currentHealth <= 0)
@@ -25,8 +26,10 @@ public class PlayerHealth : Health
             Kill();
         }
 
+        //If hp is bigger then allowed
         if (currentHealth > maxHealth)
         {
+            //Reset hp
             currentHealth = maxHealth;
         }
     }
@@ -46,11 +49,13 @@ public class PlayerHealth : Health
         }
     }
 
+    //Returns max health
     public float GetMaxHealth()
     {
         return maxHealth;
     }
 
+    //Returns current health
     public float GetCurrentHealth()
     {
         return currentHealth;

@@ -66,14 +66,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Change playerstate to idle 
     protected virtual void ReachedDestination()
     {
         state = EnemyState.idle;
     }
 
+    //Change playerstate to attacking
     protected virtual void Attack()
     {
-        Debug.Log("Attacking");
         state = EnemyState.attacking;
     }
 
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Assigns the right vector to eacht direction
     protected Vector2 DirectionToVector2(LookDirection direction)
     {
         Vector2 directionVector = Vector2.zero;
@@ -137,17 +139,22 @@ public class Enemy : MonoBehaviour
         
     protected LookDirection CalculateDirection(Vector2 pos1, Vector2 pos2, int amountDirections = 4)
     {
+        //Angle butween enemy and player
         float angle = 360f - CalculateAngle(pos1, pos2);
 
+        //Calculates degrees per turn
         float part = 360f / amountDirections;
 
+        //If the angle is 360, reset to 0
         if (angle.Equals(360))
         {
             angle = 0;
         }
 
+        //Divide angle by part (90 degrees) to get direcionts ( 0 = up, 3 = left)
         int result = Mathf.RoundToInt(angle / part);
 
+        //Compensate for amountDirections that starts from 1, while directions start from 0
         if (result == amountDirections)
         {
             result = 0;
@@ -169,6 +176,7 @@ public class Enemy : MonoBehaviour
 
         }
 
+        //Returns direction
         return direction;
     }
 }

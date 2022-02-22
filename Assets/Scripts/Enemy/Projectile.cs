@@ -18,6 +18,18 @@ public class Projectile : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(directionVector * projectileSpeed, ForceMode2D.Impulse);
     }
 
+    public void Update()
+    {
+        aliveTime += Time.deltaTime;
+        //If aliveTime is longer than allowed
+        if (aliveTime > timeTillDestroy)
+        {
+            //Destroy gameObject
+            Destroy(gameObject);
+        }
+    }
+
+    //Gives the projectile the right rotation
     private void SetDirection(LookDirection lookDirection)
     {
         direction = lookDirection;
@@ -42,16 +54,9 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    //Destroy after collision is detected
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
-    }
-    public void Update()
-    {
-        aliveTime += Time.deltaTime;
-        if (aliveTime > timeTillDestroy)
-        {
-            Destroy(gameObject);
-        }
     }
 }

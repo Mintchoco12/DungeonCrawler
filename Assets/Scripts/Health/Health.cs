@@ -35,6 +35,6 @@ public abstract class Health : MonoBehaviour
 
     public virtual void Kill()
     {
-        playerState = PlayerState.dead;
+        
     }
 }

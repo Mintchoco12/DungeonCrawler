@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Corountine for moving camera
     IEnumerator MoveCam(Vector3 direction)
     {
         //Disable playermovement

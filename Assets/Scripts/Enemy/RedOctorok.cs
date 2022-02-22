@@ -30,7 +30,8 @@ public class RedOctorok : Enemy
 
         RaycastHit2D hit = Physics2D.Raycast(rigidbody2D.position, directionVector, randomDistance, layerMask);
 
-        if (hit.collider != null)
+        //If the path is clear 
+        if (hit.collider != null) 
         {
             Debug.Log($"{hit.collider.name} is in the way");
             float distanceToHit = Vector2.Distance(rigidbody2D.position, hit.point);
@@ -45,11 +46,14 @@ public class RedOctorok : Enemy
                 destination = rigidbody2D.position;
             }
         }
+
+        //Checks if new position is in the current screen
         if (!IsInsideViewPort(destination)) 
         { 
             destination = rigidbody2D.position;
         }
  
+        //Calls SetDestination with new destination
         SetDestination(destination); 
     }
 
@@ -57,12 +61,15 @@ public class RedOctorok : Enemy
     {
         base.ReachedDestination();
 
+        //If Random.value is lower than chanceToShoow
         if (Random.value < chanceToShoot)
         {
+            //Attack
             Attack();
         }
         else
         {
+            //Else wait and go to next destination
             Invoke("SetNextDestination", timePerTile);
         }
     }
@@ -71,25 +78,32 @@ public class RedOctorok : Enemy
     {
         base.Attack();
 
+        //Aim towards player
         direction = CalculateDirection(rigidbody2D.position, player.position);
 
+        //Spawn projectile after 15 frames towards enemy(player)
         Invoke("ShootProjectile", Time.deltaTime * 15);
 
+        //After 40 frames go to next destination
         Invoke("SetNextDestination", Time.deltaTime * 40);
     }
 
     public void ShootProjectile()
     {
+        //If projectile isnt in unity, error and stop
         if (projectile == null)
         {
             Debug.Log("No projectile set on " + name);
             return;
         }
 
+        //Instantiate gameobject on octorok
         GameObject proj = Instantiate(projectile, transform.position, Quaternion.identity);
 
+        //Return refernce to script of projectile
         Projectile p = proj.GetComponent<Projectile>();
 
+        //If script isnt found, error and stop
         if (p == null)
         {
             Debug.Log("Projectile not found on instance " + name);

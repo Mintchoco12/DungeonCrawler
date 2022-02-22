@@ -17,12 +17,14 @@ public class Life : MonoBehaviour
     private void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
+        //If playerhealth cant be found, error
         if (playerHealth == null)
         {
             Debug.LogError("Can't find Playerhealth in scene, Object might be inactive");
             return;
         }
 
+        //Instantiate heart sprites
         for (int i = 0; i < playerHealth.GetMaxHealth(); i++)
         {
             GameObject heart = Instantiate(heartPrefab, heartsParent.transform);
@@ -35,6 +37,7 @@ public class Life : MonoBehaviour
         HeartsUpdate();
     }
 
+    //Changes heart sprite depending on player hp
     public void HeartsUpdate()
     {
         for (int i = 0; i < heartImages.Count; i++)

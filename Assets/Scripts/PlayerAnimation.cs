@@ -32,28 +32,28 @@ public class PlayerAnimation : MonoBehaviour
         UseItemSlot();
     }
 
+    //Checks for movement input
     private void CheckMovement()
     {
+        //If player isn't dead, allows animations
         if (playerState != PlayerState.dead)
         {
             xAxis = Input.GetAxis("Horizontal");
             yAxis = Input.GetAxis("Vertical");
 
+            //If player doesnt move enable idle animation
             if (xAxis == 0 & yAxis == 0)
             {
                 playerState = PlayerState.idle;
             }
-            else if (playerState == PlayerState.attacking && xAxis > 0 & yAxis >= 0)
-            {
-                playerState = PlayerState.walking;
-            }
+            //Else enables walking animation
             else
             {
                 playerState = PlayerState.walking;
             }
             animator.SetInteger("PlayerState", (int)playerState);
 
-
+            //Changes the direction of player
             if (yAxis > 0)
             {
                 lookDirection = LookDirection.up;
@@ -76,11 +76,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void UseItemSlot()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-
-        }
-        //B button mapped to RMB
+        //If MB2 is pressed, the player attacks
         if (Input.GetButtonDown("Fire2"))
         {
             playerState = PlayerState.attacking;
@@ -88,11 +84,13 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
+    //If player is hit enable hit animation
     public void Hit()
     {
         StartCoroutine(FlashSprite(0.1f));
     }
 
+    //Coroutine for flashing colors that appear when hit
     IEnumerator FlashSprite(float flashTime)
     {
         for (int i = 0; i < flashColors.Length; i++)
@@ -102,6 +100,7 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
+    //Shows death animation
     public void TriggerDeathAnimation()
     {
         gameObject.GetComponent<PlayerMovement>().playerState = PlayerState.dead;
@@ -110,6 +109,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetInteger("PlayerState", (int)playerState);
     }
 
+    //Returns lookdirection
     public LookDirection GetDirection()
     {
         return lookDirection;
