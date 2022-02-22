@@ -40,7 +40,6 @@ public class Projectile : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(270, Vector3.forward);
                 break;
         }
-        Debug.Log(lookDirection);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

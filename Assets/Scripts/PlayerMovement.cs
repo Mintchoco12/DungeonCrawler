@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private new Rigidbody2D rigidbody;
+    public PlayerState playerState;
 
     private Vector2 direction;
     [SerializeField] private float moveSpeed = 1f;
@@ -31,7 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void FixedUpdate()
     {
-        //Moves the player
-       rigidbody.velocity = direction * moveSpeed;
+        if (playerState != PlayerState.dead)
+        {
+            //Moves the player
+            rigidbody.velocity = direction * moveSpeed;
+        }
     }
 }

@@ -29850,17 +29850,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookDirection: 0
-  playerState: 0
+  playerState: 3
   animator: {fileID: 1337753361843297639}
   xAxis: 0
   yAxis: 0
   fire1: 0
   fire2: 0
   flashColors:
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0.92208767, a: 0}
-  - {r: 0.5414071, g: 0.8679245, b: 0.5199359, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.49803925, g: 0.9921569, b: 0.8941177, a: 1}
+  - {r: 1, g: 0, b: 0.8495722, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1337753361843297644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29873,6 +29873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a318a5581971514fb2cdf4c56c600c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: 0
   moveSpeed: 4
 --- !u!50 &1337753361843297645
 Rigidbody2D:

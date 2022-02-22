@@ -28,7 +28,7 @@ public class Attack : MonoBehaviour
 
     private void SwingSword()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && playerState != PlayerState.dead)
         {
             lookDirecton = playerAnim.GetDirection();
 
@@ -88,6 +88,7 @@ public class Attack : MonoBehaviour
                     hit2D.collider.GetComponent<EnemyHealth>().ChangeHealth(-1);
                 }
             }
+            playerAnim.GetComponent<Animator>().SetBool("Attack", true);
         }
     }
 
@@ -97,5 +98,6 @@ public class Attack : MonoBehaviour
         {
             sword[i].SetActive(false);
         }
+        playerAnim.GetComponent<Animator>().SetBool("Attack", false);
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Health : MonoBehaviour
-{
+{ 
     [SerializeField] protected float maxHealth = 3;
     [SerializeField] protected float currentHealth;
+    
+    private PlayerState playerState;
 
     public virtual void Start()
     {
@@ -33,6 +35,6 @@ public abstract class Health : MonoBehaviour
 
     public virtual void Kill()
     {
-
+        playerState = PlayerState.dead;
     }
 }

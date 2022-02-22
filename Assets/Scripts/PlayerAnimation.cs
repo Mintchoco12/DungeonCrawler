@@ -52,25 +52,26 @@ public class PlayerAnimation : MonoBehaviour
                 playerState = PlayerState.walking;
             }
             animator.SetInteger("PlayerState", (int)playerState);
-        }
 
-        if (yAxis > 0)
-        {
-            lookDirection = LookDirection.up;
+
+            if (yAxis > 0)
+            {
+                lookDirection = LookDirection.up;
+            }
+            else if (yAxis < 0)
+            {
+                lookDirection = LookDirection.down;
+            }
+            else if (xAxis > 0)
+            {
+                lookDirection = LookDirection.right;
+            }
+            else if (xAxis < 0)
+            {
+                lookDirection = LookDirection.left;
+            }
+            animator.SetFloat("LookDirection", (float)lookDirection);
         }
-        else if (yAxis < 0)
-        {
-            lookDirection = LookDirection.down;
-        }
-        else if (xAxis > 0)
-        {
-            lookDirection = LookDirection.right;
-        }
-        else if (xAxis < 0)
-        {
-            lookDirection = LookDirection.left;
-        }
-        animator.SetFloat("LookDirection", (float)lookDirection);
     }
 
     private void UseItemSlot()
@@ -103,6 +104,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void TriggerDeathAnimation()
     {
+        gameObject.GetComponent<PlayerMovement>().playerState = PlayerState.dead;
         playerState = PlayerState.dead;
         animator.SetTrigger("Death");
         animator.SetInteger("PlayerState", (int)playerState);
