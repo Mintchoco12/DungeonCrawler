@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject gameManager;
+    [SerializeField] private Vector2 viewportSize;
 
     private Coroutine currrentCoroutine;
-
-    [SerializeField]
-    private Vector2 viewportSize;
 
     private void Update()
     {
@@ -43,6 +41,9 @@ public class CameraController : MonoBehaviour
     {
         //Disable playermovement
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;        
+
+        gameManager.GetComponent<Game>().DeactivateCurrentRoom();
+
         //Wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
 
@@ -60,6 +61,8 @@ public class CameraController : MonoBehaviour
 
         //Wait 0.2 seconds
         yield return new WaitForSeconds(0.2f);
+        
+        gameManager.GetComponent<Game>().ActivateRoom(end);
 
         //Enable playermovement
         player.GetComponent<PlayerMovement>().enabled = true;

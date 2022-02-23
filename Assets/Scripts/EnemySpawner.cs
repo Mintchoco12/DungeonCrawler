@@ -22,13 +22,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        //If current enemies is equal to max allowed enemies, stop and return
         if (enemies.Length == spawnedEnemies.Count)
         {
             return;
         }
 
+        //Adds deltatime to spawnTimer
         spawnTimer += Time.deltaTime;
 
+        //Spawns enemies on interval
         if (spawnTimer >= interval)
         {
             SpawnNextEnemy();
@@ -38,21 +41,26 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnNextEnemy()
     {
+        //Saves the path for Resources.Load
         string enemyPathName = "";
 
+        //Takes the right path
         switch (enemies[spawnedEnemies.Count])
         {
             case EnemyType.RedOctorok:
                 enemyPathName = "Prefabs/Enemies/RedOctorok";
                 break;
         }
-        GameObject go = Instantiate(Resources.Load<GameObject>(enemyPathName), transform.position, Quaternion.identity);
 
+        //Get the gameobject from resources folder and instantiate on location of gameobject
+        GameObject go = Instantiate(Resources.Load<GameObject>(enemyPathName), transform.position, Quaternion.identity);
+        //Adds enemie to list
         spawnedEnemies.Add(go);
     }
 
     private void OnDisable()
     {
+        //Destroys all gameobjects in spawnedEnemies
         for (int i = 0; i < spawnedEnemies.Count; i++)
         {
             Destroy(spawnedEnemies[i]);

@@ -102,7 +102,21 @@ public class Game : MonoBehaviour
 
     public void ActivateRoom(Vector2 position)
     {
-        GetRoomWithWorldPosition((Vector2)position);
+        Room room = GetRoomWithWorldPosition((Vector2)position);
+
+        if (room != null)
+        {
+            currentRoom = room;
+            currentRoom.Activate(true);
+        }
+    }
+
+    public void DeactivateCurrentRoom()
+    {
+        if (currentRoom != null)
+        {
+            currentRoom.Activate(false);
+        }
     }
 
     private void OnDrawGizmos()
