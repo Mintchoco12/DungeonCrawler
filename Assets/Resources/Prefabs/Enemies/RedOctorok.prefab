@@ -158,7 +158,7 @@ MonoBehaviour:
   timePerTile: 1
   maxDistance: 4
   projectile: {fileID: 5973854178048633566, guid: 9cebfe2f111b8464c9f69616c9f4cd4b, type: 3}
-  chanceToShoot: 1
+  chanceToShoot: 100
   layerMask:
     serializedVersion: 2
     m_Bits: 64
